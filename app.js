@@ -16,9 +16,9 @@ function Book(Title, Author, Pages, PubYear){//constructor
 function addBook(book){
 
     library.push(book);
-    const bookDiv = document.createElement('div');
-    bookDiv.className = "bookDiv";
-    for(const key in book){
+    const bookDiv = document.createElement('div');//create div dom element
+    bookDiv.className = "bookDiv";//names div element
+    for(const key in book){//for every key in the book object
         if(book.hasOwnProperty(key)){//if book has this property
             const bookField = book[key];//grab value
             const bookContent = document.createElement('p');
@@ -35,6 +35,24 @@ function addBook(book){
     
 
 }
+
+//setting up addBook Form
+
+const addBookButton = document.querySelector(".addBook");
+const closeButton = document.querySelector(".closeButton");
+
+closeButton.addEventListener('click', () =>{
+
+
+    document.querySelector('.closeButton').close();
+})
+
+addBookButton.addEventListener('click', ()=>{
+
+    document.querySelector('.openModal').showModal();
+
+
+})
 
 function printLib(){
 console.log("The library contains: ")
