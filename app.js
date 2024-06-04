@@ -2,6 +2,8 @@
 ///
 
 const library = [];
+const form = document.getElementById("form-container");
+const addButton = document.querySelector(".addBook");
 let container = document.querySelector(".container");
 function Book(Title, Author, Pages, PubYear){//constructor
 
@@ -12,6 +14,13 @@ function Book(Title, Author, Pages, PubYear){//constructor
 
 
 }
+
+addButton.addEventListener('click', function(){
+
+    form.classList.toggle("hidden");
+
+
+});
 
 function addBook(book){
 
