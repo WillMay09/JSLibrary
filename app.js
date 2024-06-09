@@ -5,22 +5,23 @@ const library = [];
 const form = document.getElementById("form-container");
 const addButton = document.querySelector(".addBook");
 let container = document.querySelector(".container");
+let modal = document.querySelector(".openModal");
 function Book(Title, Author, Pages, PubYear){//constructor
 
     this.Title = Title;
     this.Author = Author;
-    this.Pages=Pages;
+    this.Pages = Pages;
     this.PubYear = PubYear;
 
 
 }
 
-addButton.addEventListener('click', function(){
+// addButton.addEventListener('click', function(){
 
-    form.classList.toggle("hidden");
+//     form.classList.toggle("hidden");
 
 
-});
+// });
 
 function addBook(book){
 
@@ -45,6 +46,29 @@ function addBook(book){
 
 }
 
+const submit = document.querySelector(".submitButton");
+
+submit.addEventListener('click',(event)=>{
+    event.preventDefault();
+    let title = document.getElementById('title').value;
+    let author = document.getElementById('author').value;
+    let pages = document.getElementById('pages').value;
+    let pubYear = document.getElementById('pubYear').value;
+    let addedBook = new Book(title, author, pages, pubYear);
+    addBook(addedBook);
+    modal.close();
+    
+   
+    
+
+
+
+
+
+
+})
+
+
 //setting up addBook Form
 
 const addBookButton = document.querySelector(".addBook");
@@ -53,12 +77,12 @@ const closeButton = document.querySelector(".closeButton");
 closeButton.addEventListener('click', () =>{
 
 
-    document.querySelector('.closeButton').close();
+    modal.close();
 })
 
 addBookButton.addEventListener('click', ()=>{
 
-    document.querySelector('.openModal').showModal();
+    modal.showModal();
 
 
 })
