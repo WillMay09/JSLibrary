@@ -41,8 +41,20 @@ function addBook(book){
 
 
     }
+    //Creating Buttons on book Div
+    const ButtonDiv = document.createElement('div');
+    ButtonDiv.className = "buttonDiv";
+    const readButton = document.createElement('button');
+    readButton.className = 'read';
+    readButton.textContent = "Read";
+    const deleteButton = document.createElement('button')
+    deleteButton.className = 'delete';
+    deleteButton.textContent = 'Remove';
+    ButtonDiv.appendChild(readButton);
+    ButtonDiv.appendChild(deleteButton);
+
     container.appendChild(bookDiv);
-    
+    container.appendChild(ButtonDiv);
 
 }
 
