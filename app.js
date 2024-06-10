@@ -12,6 +12,8 @@ function Book(Title, Author, Pages, PubYear){//constructor
     this.Author = Author;
     this.Pages = Pages;
     this.PubYear = PubYear;
+    this.id = Date.now().toString();
+    this.read = false;
 
 
 }
@@ -24,6 +26,12 @@ function Book(Title, Author, Pages, PubYear){//constructor
 // });
 
 function addBook(book){
+
+    if(!book.id){//adds unique id to each book object by using date class, retrieving current time(milliseconds) and converting it to a string
+        book.id = Date.now().toString();
+
+
+    }
 
     library.push(book);
     const bookDiv = document.createElement('div');//create div dom element
@@ -45,16 +53,70 @@ function addBook(book){
     const ButtonDiv = document.createElement('div');
     ButtonDiv.className = "buttonDiv";
     const readButton = document.createElement('button');
-    readButton.className = 'read';
+    readButton.className = 'readButton';
     readButton.textContent = "Read";
     const deleteButton = document.createElement('button')
     deleteButton.className = 'delete';
     deleteButton.textContent = 'Remove';
     ButtonDiv.appendChild(readButton);
     ButtonDiv.appendChild(deleteButton);
-
+    bookDiv.appendChild(ButtonDiv);
     container.appendChild(bookDiv);
-    container.appendChild(ButtonDiv);
+
+    addButtonFunctionality(readButton, deleteButton, book);
+    
+
+}
+
+
+function addButtonFunctionality(readButton, deleteButton, book){
+
+    readButton.addEventListener('click', ()=>{
+
+        ///Mark the book as read
+        if(book.read === 'false'){
+
+            readButton.classList.add('readButton');
+            readButton.classList.remove('notRead');
+            book.read = 'true';
+
+
+        }else{
+
+
+            readButton.classList.remove('readButton');
+            readButton.classList.add('notRead');
+            book.read = 'false';
+        }
+        
+
+
+
+
+
+        //Mark the book as not read
+
+
+
+
+
+    });
+
+
+    deleteButton.addEventListener('click', (event)=>{
+
+        const bookDiv = event.target.closest('.bookDiv');//grabs closet ancestor with class .bookDiv
+        const bookId = bookDiv.dataset.id;//grabs this id
+
+
+        bookDiv.remove();
+
+        //filter out book with id
+        library = library.filter(book => book.id !== bookId);
+
+
+    });
+
 
 }
 

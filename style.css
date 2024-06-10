@@ -136,6 +136,31 @@ background-color: var(--main-color);
 
 }
 
+.notRead, .read{
+
+    font-weight: bold;
+    border-radius: 5px;
+
+
+}
+
+.readButton{
+
+    background-color: green;
+    
+
+
+}
+
+.notRead{
+
+    background-color: red;
+
+
+}
+
+
+
 .footer{
     grid-row: 3 / 4;
     display: flex;
