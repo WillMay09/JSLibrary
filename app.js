@@ -27,49 +27,32 @@ function Book(Title, Author, Pages, PubYear){//constructor
 
 function addBook(book){
 
-
-    //creating book div
     library.push(book);
-    const bookDiv = document.createElement('div');//create div dom element
+    //Components of Book DOM element
+  
+    const bookDiv = document.createElement('div');
+    bookDiv.className = "bookDiv";
+
     const bookContentDiv = document.createElement('div');
     bookContentDiv.className = "bookContentDiv";
-    bookDiv.className = "bookDiv";//names div element
-    for(const key in book){//for every key in the book object
-        if(book.hasOwnProperty(key)){//if book has this property
-            if(key === 'id' ||  key ==='read'){
-                
-                continue;
-            }
-                const bookField = book[key];//grab value
-                const bookContent = document.createElement('p');
-                bookContent.className = key;
-                bookContent.textContent = `${key}: ${bookField} `
-                bookContentDiv.appendChild(bookContent);
-
-           
-            
-
-        }
 
 
-    }
-    bookDiv.appendChild(bookContentDiv);
-
-    //Adding an Image to the book object
-    const imgUrl = checkImage();
-    const imgItem = document.createElement('img');
-    imgItem.src = checkImage();
-    imgItem.alt = "default book logo"
-    imgItem.width = 100;
-    imgItem.height = 100;
     const imgDiv = document.createElement('div');
     imgDiv.className = 'imgDiv';
-    imgDiv.appendChild(imgItem);
-    bookDiv.appendChild(imgDiv);
 
 
 
+    //Populating bookContentDiv with book field items
+    populateBookContent(book, bookContentDiv);
+
+    //Adding an Image to the book object
     
+    createImage(book,imgDiv);
+    
+    //Adding image and content items to bookDiv element
+    bookDiv.appendChild(imgDiv);
+    bookDiv.appendChild(bookContentDiv);
+
 
 
     //Creating Buttons on book Div
@@ -88,6 +71,40 @@ function addBook(book){
 
     addButtonFunctionality(readButton, deleteButton, book);
     
+
+}
+
+function createImage(book, imgDiv){
+    const imgItem = document.createElement('img');
+    imgItem.src = checkImage();
+    imgItem.alt = "default book logo"
+    imgItem.width = 100;
+    imgItem.height = 100;
+    imgDiv.appendChild(imgItem);
+
+    }
+
+function populateBookContent(book, bookContentDiv){
+    for(const key in book){
+        if(book.hasOwnProperty(key)){//if book has this property
+            if(key === 'id' ||  key ==='read'){
+                
+                continue;
+            }
+                const bookField = book[key];//grab value
+                const bookContent = document.createElement('p');
+                bookContent.className = key;
+                bookContent.textContent = `${key}: ${bookField} `
+                bookContentDiv.appendChild(bookContent);
+
+           
+            
+
+        }
+
+
+    }
+
 
 }
 
