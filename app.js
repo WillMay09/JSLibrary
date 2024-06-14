@@ -1,7 +1,7 @@
 
 ///
 
-const library = [];
+let library = [];
 const form = document.getElementById("form-container");
 const addButton = document.querySelector(".addBook");
 let container = document.querySelector(".container");
@@ -88,6 +88,7 @@ function createButtons(book, bookContentDiv){
     const deleteButton = document.createElement('button')
     deleteButton.className = 'delete';
     deleteButton.textContent = 'Remove';
+    deleteButton.setAttribute('data-id', book.id);
     ButtonDiv.appendChild(readButton);
     ButtonDiv.appendChild(deleteButton);
     bookContentDiv.appendChild(ButtonDiv);
@@ -180,8 +181,9 @@ function addButtonFunctionality(readButton, deleteButton, book){
     deleteButton.addEventListener('click', (event)=>{
 
         const bookDiv = event.target.closest('.bookDiv');//grabs closet ancestor with class .bookDiv
-        const bookId = bookDiv.id;//grabs this id
-
+        const bookId = event.target.dataset.id;//grabs this id
+        console.log(bookId);
+        
 
         bookDiv.remove();
 
