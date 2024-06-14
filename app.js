@@ -18,12 +18,34 @@ function Book(Title, Author, Pages, PubYear){//constructor
 
 }
 
+function Book(Title, Author, Pages, PubYear, url){//constructor
+
+    this.Title = Title;
+    this.Author = Author;
+    this.Pages = Pages;
+    this.PubYear = PubYear;
+    this.id = Date.now().toString();
+    this.read = false;
+    this.url = url;
+
+
+}
+
+
 // addButton.addEventListener('click', function(){
 
 //     form.classList.toggle("hidden");
 
 
 // });
+
+function loadTestData(){
+
+
+
+
+}
+
 
 function addBook(book){
 
@@ -40,22 +62,24 @@ function addBook(book){
     const imgDiv = document.createElement('div');
     imgDiv.className = 'imgDiv';
 
-
-
     //Populating bookContentDiv with book field items
     populateBookContent(book, bookContentDiv);
 
     //Adding an Image to the book object
-    
-    createImage(book,imgDiv);
+    createImage(book, imgDiv);
     
     //Adding image and content items to bookDiv element
     bookDiv.appendChild(imgDiv);
     bookDiv.appendChild(bookContentDiv);
-
-
-
     //Creating Buttons on book Div
+    createButtons(book, bookContentDiv);
+   
+    container.appendChild(bookDiv);
+
+}
+
+function createButtons(book, bookContentDiv){
+
     const ButtonDiv = document.createElement('div');
     ButtonDiv.className = "buttonDiv";
     const readButton = document.createElement('button');
@@ -66,17 +90,17 @@ function addBook(book){
     deleteButton.textContent = 'Remove';
     ButtonDiv.appendChild(readButton);
     ButtonDiv.appendChild(deleteButton);
-    bookDiv.appendChild(ButtonDiv);
-    container.appendChild(bookDiv);
-
+    bookContentDiv.appendChild(ButtonDiv);
     addButtonFunctionality(readButton, deleteButton, book);
-    
+
+
+
 
 }
 
 function createImage(book, imgDiv){
     const imgItem = document.createElement('img');
-    imgItem.src = checkImage();
+    imgItem.src = book.url;
     imgItem.alt = "default book logo"
     imgItem.width = 100;
     imgItem.height = 100;
@@ -85,7 +109,12 @@ function createImage(book, imgDiv){
     }
 
 function populateBookContent(book, bookContentDiv){
+    let counter = 0;
     for(const key in book){
+        if(counter >= 4){
+            break;
+
+        }
         if(book.hasOwnProperty(key)){//if book has this property
             if(key === 'id' ||  key ==='read'){
                 
@@ -102,17 +131,17 @@ function populateBookContent(book, bookContentDiv){
 
         }
 
-
+        counter++;
     }
 
 
 }
 
-function checkImage(){
+function checkImage(url){
 
-    const url = document.getElementById('url').value;
+    
     const defaultImage = 'https://smartmobilestudio.com/wp-content/uploads/2012/06/leather-book-preview.png'
-    if(url.trim() ==''){
+    if(url === ""){
 
         return defaultImage;
 
@@ -120,7 +149,7 @@ function checkImage(){
     }else{
 
 
-        return url.value;
+        return url.value.trim();
     }
 
 }
@@ -145,25 +174,13 @@ function addButtonFunctionality(readButton, deleteButton, book){
             readButton.classList.add('notRead');
             book.read = 'false';
         }
-        
-
-
-
-
-
-        //Mark the book as not read
-
-
-
-
-
     });
 
 
     deleteButton.addEventListener('click', (event)=>{
 
         const bookDiv = event.target.closest('.bookDiv');//grabs closet ancestor with class .bookDiv
-        const bookId = bookDiv.dataset.id;//grabs this id
+        const bookId = bookDiv.id;//grabs this id
 
 
         bookDiv.remove();
@@ -173,7 +190,6 @@ function addButtonFunctionality(readButton, deleteButton, book){
 
 
     });
-
 
 }
 
@@ -186,17 +202,11 @@ submit.addEventListener('click',(event)=>{
     let author = document.getElementById('author').value;
     let pages = document.getElementById('pages').value;
     let pubYear = document.getElementById('pubYear').value;
-    let addedBook = new Book(title, author, pages, pubYear);
+    let url = document.getElementById('url').value;
+    url = checkImage(url);
+    let addedBook = new Book(title, author, pages, pubYear, url);
     addBook(addedBook);
     modal.close();
-    
-   
-    
-
-
-
-
-
 
 })
 
@@ -225,7 +235,7 @@ console.log(library);
 
 }
 
-let book1 = new Book("Lord of the Rings", "J.R. Tolken", 540, 1955);
+let book1 = new Book("Lord of the Rings", "J.R. Tolken", 540, 1955, 'https://smartmobilestudio.com/wp-content/uploads/2012/06/leather-book-preview.png');
 addBook(book1);
 printLib();
 
