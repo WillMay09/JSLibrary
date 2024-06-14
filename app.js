@@ -27,34 +27,57 @@ function Book(Title, Author, Pages, PubYear){//constructor
 
 function addBook(book){
 
-    if(!book.id){//adds unique id to each book object by using date class, retrieving current time(milliseconds) and converting it to a string
-        book.id = Date.now().toString();
 
-
-    }
-
+    //creating book div
     library.push(book);
     const bookDiv = document.createElement('div');//create div dom element
+    const bookContentDiv = document.createElement('div');
+    bookContentDiv.className = "bookContentDiv";
     bookDiv.className = "bookDiv";//names div element
     for(const key in book){//for every key in the book object
         if(book.hasOwnProperty(key)){//if book has this property
-            const bookField = book[key];//grab value
-            const bookContent = document.createElement('p');
-            bookContent.className = key;
-            bookContent.textContent = `${key}: ${bookField} `
-            bookDiv.appendChild(bookContent);
+            if(key === 'id' ||  key ==='read'){
+                
+                continue;
+            }
+                const bookField = book[key];//grab value
+                const bookContent = document.createElement('p');
+                bookContent.className = key;
+                bookContent.textContent = `${key}: ${bookField} `
+                bookContentDiv.appendChild(bookContent);
+
+           
             
 
         }
 
 
     }
+    bookDiv.appendChild(bookContentDiv);
+
+    //Adding an Image to the book object
+    const imgUrl = checkImage();
+    const imgItem = document.createElement('img');
+    imgItem.src = checkImage();
+    imgItem.alt = "default book logo"
+    imgItem.width = 100;
+    imgItem.height = 100;
+    const imgDiv = document.createElement('div');
+    imgDiv.className = 'imgDiv';
+    imgDiv.appendChild(imgItem);
+    bookDiv.appendChild(imgDiv);
+
+
+
+    
+
+
     //Creating Buttons on book Div
     const ButtonDiv = document.createElement('div');
     ButtonDiv.className = "buttonDiv";
     const readButton = document.createElement('button');
-    readButton.className = 'readButton';
-    readButton.textContent = "Read";
+    readButton.className = 'notRead';
+    readButton.textContent = "Not Read";
     const deleteButton = document.createElement('button')
     deleteButton.className = 'delete';
     deleteButton.textContent = 'Remove';
@@ -68,6 +91,23 @@ function addBook(book){
 
 }
 
+function checkImage(){
+
+    const url = document.getElementById('url').value;
+    const defaultImage = 'https://smartmobilestudio.com/wp-content/uploads/2012/06/leather-book-preview.png'
+    if(url.trim() ==''){
+
+        return defaultImage;
+
+
+    }else{
+
+
+        return url.value;
+    }
+
+}
+
 
 function addButtonFunctionality(readButton, deleteButton, book){
 
@@ -75,7 +115,7 @@ function addButtonFunctionality(readButton, deleteButton, book){
 
         ///Mark the book as read
         if(book.read === 'false'){
-
+            readButton.innerText = 'Read';
             readButton.classList.add('readButton');
             readButton.classList.remove('notRead');
             book.read = 'true';
@@ -83,7 +123,7 @@ function addButtonFunctionality(readButton, deleteButton, book){
 
         }else{
 
-
+            readButton.innerText = 'Not Read';
             readButton.classList.remove('readButton');
             readButton.classList.add('notRead');
             book.read = 'false';
@@ -124,6 +164,7 @@ const submit = document.querySelector(".submitButton");
 
 submit.addEventListener('click',(event)=>{
     event.preventDefault();
+
     let title = document.getElementById('title').value;
     let author = document.getElementById('author').value;
     let pages = document.getElementById('pages').value;

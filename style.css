@@ -65,7 +65,13 @@ background-color: var(--main-color);
 
 
 }
+
+.bookContentDiv{
+    
+
+}
 .bookDiv{
+    display: flex;
     background-color: var(--secondary-color);
     color: white;
     border-radius: 5px;
@@ -126,6 +132,13 @@ background-color: var(--main-color);
 
     display: flex;
     flex-direction: column;
+}
+
+.url{
+
+    width: 100%;
+
+
 }
 
 .row input{
